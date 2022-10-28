@@ -13,3 +13,4 @@ les variables d'environnement:
 Pour que cette infra fonctionne, vous devez créer un fichier *` .env `* à la racine.
 # infra-docker-php
 # infra-docker-php
+# infra-docker
