@@ -29,7 +29,6 @@
 
       node:
         build: ./conf/node
-        working_dir: /var/nodeJS
         volumes:
           - ./front:/var/nodeJS
         ports:
