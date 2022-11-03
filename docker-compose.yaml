@@ -11,28 +11,72 @@
           - "443:443"
           # https
         volumes:
-          - ./back/:/var/www/html
+          - "./back/:/var/www/html"
         env_file:
-          - ./.env
+          - "./.env"
 
       db:
         image: mariadb
         restart: always
         env_file:
-          - ./.env
-        ports:
-          - "3307:3306"
+          - "./.env"
+        expose:
+          - "3306"
         volumes:
           - "./sql:/docker-entrypoint-initdb.d"
-          - db:/var/lib/mariadb
+          - "db:/var/lib/mariadb"
+        healthcheck:
+          test:
+            [
+              "CMD",
+              "mysql",
+              "-u",
+              "${MYSQL_USER}",
+              "-p${MYSQL_PASSWORD}",
+              "-e",
+              "SELECT 1",
+            ]
+          interval: 10s
+          timeout: 5s
+          retries: 5
 
-
-      node:
-        build: ./config/node
+      node_installer:
+        image: "node:16"
+        restart: "no"
+        command: "yarn install"
         volumes:
-          - ./front:/var/nodeJS
-        ports:
-          - "3000:3000"
+          - "./front:/app"
+        user: "1000"
 
+      node_builder:
+        image: "node:16"
+        restart: "no"
+        command: "yarn build"
+        depends_on:
+           node_installer:
+             condition: "service_completed_successfully"
+        volumes:
+          - "./front:/app"
+        user: "1000"
+
+      node_watcher:
+        image: "node:16"
+        restart: "unless-stopped"
+        command: "yarn build"
+        depends_on:
+           node_builder:
+             condition: "service_completed_successfully"
+        volumes:
+          - "./front:/app"
+        user: "1000"
+
+      nginx:
+        image: nginx:latest
+        restart: "unless-stopped"
+        ports:
+          - "80:80"
+          - "443:443"
+        volumes:
+          - "./conf/nginx/server.conf:/etc/nginx/nginx.conf:ro"
     volumes:
       db:
