@@ -6,7 +6,7 @@
         build: ./conf/php
         ports:
           - "81:80"
-          - # 81:80, http
+          # 81:80, http
           # mon PC:machine virtuelle
           - "443:443"
 #          https
