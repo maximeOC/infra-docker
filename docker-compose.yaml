@@ -3,7 +3,7 @@
     services:
 
       php:
-        build: ./conf/php
+        build: ./config/php
         ports:
           - "81:80"
           # 81:80, http
@@ -28,7 +28,7 @@
 
 
       node:
-        build: ./conf/node
+        build: ./config/node
         volumes:
           - ./front:/var/nodeJS
         ports:
