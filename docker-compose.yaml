@@ -1,37 +1,43 @@
-version: '3.9'
-
-services:
-    php:
-      build: ./config/php
-      ports:
-        - "81:80" 
-        # 81:80, http
-        # mon PC:machine virtuelle
-        - "443:443"
-        # le port 443 est pour le https
-      volumes:
-        - ./back:/var/www/html 
-      env_file:
-        - ./.env
-    db:
-      image: mariadb
-      restart: always
-      env_file:
-        - ./.env
-      ports:
-        - "3307:3306"
-      volumes:
-        - # Volume de la base de données
-        - "db:/var/lib/mariadb"
-
-
-    node:
-      build: ./config/node
-      working_dir: /var/nodeJS
-      ports:
-        - "3000:3000"
-      volumes:
-        - ./front:/var/nodeJS
-
 volumes:
   db:
+
+
+    version: "3.9"
+
+    services:
+
+      php:
+        build: ./conf/php
+        ports:
+          - "81:80"
+          - # 81:80, http
+          # mon PC:machine virtuelle
+          - "443:443"
+#          https
+        volumes:
+          - ./back/:/var/www/html
+        env_file:
+          - ./.env
+
+      db:
+        image: mariadb
+        restart: always
+        env_file:
+          - ./.env
+        ports:
+          - "3307:3306"
+        volumes:
+          - ./sql:/docker-entrypoint-initdb.d/init.sql
+          - db:/var/lib/mariadb
+
+
+      node:
+        build: ./conf/node
+        WORKING DIR: /var/nodeJS
+        volumes:
+          - ./front:/var/nodeJS
+        ports:
+          - "3000:3000"
+
+    volumes:
+      db:
