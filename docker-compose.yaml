@@ -21,9 +21,8 @@ services:
       ports:
         - "3307:3306"
       volumes:
-        - # Volume de la base de données-
-        - ./sql:/docker-entrypoint-initdb.d/init.sql
-        - db:/var/lib/mariadb
+        - # Volume de la base de données
+        - "db:/var/lib/mariadb"
 
 
     node:
