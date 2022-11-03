@@ -2,6 +2,7 @@ start:
 	git pull 
 	# git pull -C front
 	# git pull -C back
+#	@phpstorm back && @webstorm front
 	docker-compose up
 
 stop:
@@ -9,10 +10,10 @@ stop:
 	# cd ./back && git add . && git commit -m "commit message" && git push
 	docker-compose stop
 
-#restart:
-#	docker stop $$(docker ps -a -q)
-#	docker rm $$(docker ps -a -q)
-#	make start
+restart:
+	docker stop $$(docker ps -a -q)
+	docker rm $$(docker ps -a -q)
+	make start
 
 db-connect:
 	@echo "vous allez etre connectés à la base de donnée chakal !"

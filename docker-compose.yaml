@@ -5,7 +5,7 @@ services:
       build: ./config/php
       ports:
         - "81:80" 
-        # 80:80, http
+        # 81:80, http
         # mon PC:machine virtuelle
         - "443:443"
         # le port 443 est pour le https
@@ -21,8 +21,10 @@ services:
       ports:
         - "3307:3306"
       volumes:
-        - # Volume de la base de données
+        - # Volume de la base de données-
+        - ./sql:/docker-entrypoint-initdb.d/init.sql
         - db:/var/lib/mariadb
+
 
     node:
       build: ./config/node
