@@ -24,7 +24,7 @@
           - "3307:3306"
         volumes:
           - "./sql:/docker-entrypoint-initdb.d/init.sql"
-          - "db:/var/lib/mariadb"
+          - db:/var/lib/mariadb
 
 
       node:
