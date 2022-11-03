@@ -9,7 +9,7 @@
           # 81:80, http
           # mon PC:machine virtuelle
           - "443:443"
-#          https
+          # https
         volumes:
           - ./back/:/var/www/html
         env_file:
@@ -23,7 +23,7 @@
         ports:
           - "3307:3306"
         volumes:
-          - "./sql:/docker-entrypoint-initdb.d/init.sql"
+          - "./sql:/docker-entrypoint-initdb.d"
           - db:/var/lib/mariadb
 
 
