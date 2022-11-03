@@ -1,7 +1,3 @@
-volumes:
-  db:
-
-
     version: "3.9"
 
     services:
@@ -33,7 +29,7 @@ volumes:
 
       node:
         build: ./conf/node
-        WORKING DIR: /var/nodeJS
+        working_dir: /var/nodeJS
         volumes:
           - ./front:/var/nodeJS
         ports:
