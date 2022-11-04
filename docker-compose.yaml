@@ -85,7 +85,7 @@
         image: "nginx:latest"
         restart: "unless-stopped"
         ports:
-          - "80:80"
+          - "81:80"
           - "443:443"
         volumes:
           - "./config/nginx/server.conf:/etc/nginx/nginx.conf:ro"
