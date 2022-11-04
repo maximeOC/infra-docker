@@ -70,8 +70,19 @@
           - "./front:/app"
         user: "1000"
 
+      node:
+        image: "node:16"
+        depends_on:
+          node_builder:
+            condition: "service_completed_successfully"
+        tty: true
+        user: "node"
+        volumes:
+          - "./app:/app"
+        working_dir: "/app"
+
       nginx:
-        image: nginx:latest
+        image: "nginx:latest"
         restart: "unless-stopped"
         ports:
           - "80:80"
