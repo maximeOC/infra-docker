@@ -62,7 +62,7 @@
       node_watcher:
         image: "node:16"
         restart: "unless-stopped"
-        command: "yarn build"
+        command: "yarn dev"
         depends_on:
            node_builder:
              condition: "service_completed_successfully"
@@ -78,7 +78,7 @@
         tty: true
         user: "node"
         volumes:
-          - "./app:/app"
+          - "./back:/app"
         working_dir: "/app"
 
       nginx:
