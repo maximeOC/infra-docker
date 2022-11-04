@@ -88,6 +88,6 @@
           - "80:80"
           - "443:443"
         volumes:
-          - "./conf/nginx/server.conf:/etc/nginx/nginx.conf:ro"
+          - "./config/nginx/server.conf:/etc/nginx/nginx.conf:ro"
     volumes:
       db:
