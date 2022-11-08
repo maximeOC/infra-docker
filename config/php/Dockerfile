@@ -6,7 +6,3 @@ RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["php-fpm"]
 
-
-
-# If you have native dependencies, you'll need extra tools
-# RUN apk add --no-cache make gcc g++ python3

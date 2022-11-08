@@ -4,6 +4,8 @@
 
       php:
         build: ./config/php
+        expose:
+          - 9000
         ports:
           - "82:80"
           # 81:80, http
@@ -44,50 +46,55 @@
         image: "node:16"
         restart: "no"
         command: "yarn install"
+        working_dir: "/app"
         volumes:
           - "./front:/app"
-        user: "1000"
 
       node_builder:
         image: "node:16"
         restart: "no"
         command: "yarn build"
+        working_dir: "/app"
         depends_on:
            node_installer:
              condition: "service_completed_successfully"
         volumes:
           - "./front:/app"
-        user: "1000"
 
       node_watcher:
         image: "node:16"
         restart: "unless-stopped"
         command: "yarn dev"
+        working_dir: "/app"
+        ports:
+          - "3000:3000"
         depends_on:
            node_builder:
              condition: "service_completed_successfully"
         volumes:
           - "./front:/app"
-        user: "1000"
 
-      node:
-        image: "node:16"
-        depends_on:
-          node_builder:
-            condition: "service_completed_successfully"
-        tty: true
-        user: "node"
-        volumes:
-          - "./back:/app"
-        working_dir: "/app"
+#      node:
+#        image: "node:16"
+#        depends_on:
+#          node_builder:
+#            condition: "service_completed_successfully"
+#        tty: true
+#        user: "node"
+#        volumes:
+#          - "./back:/app"
+#        working_dir: "/app"
 
       nginx:
         image: "nginx:latest"
         restart: "unless-stopped"
+        volumes_from:
+          - php
         ports:
-          - "81:80"
-          - "443:443"
+          - "8080:80"
+          - "4443:443"
         volumes:
           - "./config/nginx/server.conf:/etc/nginx/nginx.conf:ro"
+
     volumes:
       db:
